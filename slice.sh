@@ -31,15 +31,15 @@ filename="$1"
 # ogr2ogr -f "GeoJSON" -s_srs EPSG:3826 -t_srs EPSG:4326 output.json source.shp
 
 for c in ${COUNTY}; do
-	echo "[${c}]"
-	(cat << EOF
+    echo "[${c}]"
+    (cat << EOF
 {                                                                                 
 "type": "FeatureCollection",                                                       
 "name": "Sidewalk_Cpami_20191230",                                                 
 "crs": { "type": "name",  "properties": { "name": "urn:ogc:def:crs:EPSG::3826" } }, 
 "features": [                                                                     
 EOF
-	 grep -P "\"COUNTY_NA\":\s*\"${c}\"" "${filename}" | sed '$ s/.$//';
-	 echo "] }") > "${c}.json"
-     ogr2ogr -f "GeoJSON" -s_srs EPSG:3826 -t_srs EPSG:4326 "${c}4326.json" "${c}.json"
+    grep -P "\"COUNTY_NA\":\s*\"${c}\"" "${filename}" | sed '$ s/.$//';
+    echo "] }") > "${c}.json"
+    ogr2ogr -f "GeoJSON" -s_srs EPSG:3826 -t_srs EPSG:4326 "${c}4326.json" "${c}.json"
 done
